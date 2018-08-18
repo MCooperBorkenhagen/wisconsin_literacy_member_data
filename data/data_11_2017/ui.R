@@ -2,15 +2,15 @@ load(file = "dpi_data.rda")
 
 
 # set the eligible variables to display:
-variables_to_display = c("percent_act_ela_below_basic", "average_act_english_percentile", "average_act_reading_percentile", 
-                         "percent_12th_grade_ell", "percent_graduates", "percent_wsas_ela_below_basic_3_8", "percent_wsas_ela_below_basic_3_5",
-                         "percent_wsas_ela_below_basic_6_8", "unemployment")
 
+variables_to_display = c("percent_act_ela_below_basic", "average_act_english_percentile", "average_act_reading_percentile", 
+                       "percent_12th_grade_ell", "percent_graduates", "percent_wsas_ela_below_basic_3_8", "percent_wsas_ela_below_basic_3_5",
+                       "percent_wsas_ela_below_basic_6_8", "unemployment")
 # Use a fluid Bootstrap layout
 fluidPage(
   
   # Give the page a title
-  titlePanel("Percentage of students scoring 'below basic' on ACT, English Language Arts"),
+  titlePanel("Here is some stuff"),
   
   # Generate a row with a sidebar
   sidebarLayout(
@@ -25,7 +25,7 @@ fluidPage(
     
     # Create a spot for the barplot
     mainPanel(
-      plotOutput("plot_percent_act_ela_below_basic")  
+      plotOutput("plot_variable_by_year")  
     )
     
   )
