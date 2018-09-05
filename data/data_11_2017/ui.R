@@ -1,23 +1,22 @@
-load(file = "dpi_data.rda")
+load(file = "dpi_data_for_website.rda")
 
 
 # set the eligible variables to display:
-
-variables_to_display = c("percent_act_ela_below_basic", "average_act_english_percentile", "average_act_reading_percentile", 
-                       "percent_12th_grade_ell", "percent_graduates", "percent_wsas_ela_below_basic_3_8", "percent_wsas_ela_below_basic_3_5",
-                       "percent_wsas_ela_below_basic_6_8", "unemployment")
+variables_to_display = c("Below basic high school English and Language Arts (%)", "Average high school English score (%)", "Average high school Reading score (%)", 
+                          "English language learners in 12th grade (%)", "Graduating seniors (%)", "Below basic elementary school English & Language Arts (%)",
+                          "Below basic 3-5th grade English & Language Arts (%)", "Below basic 6-8th grade English & Language Arts (%)", "Unemployment")
 # Use a fluid Bootstrap layout
 fluidPage(
   
   # Give the page a title
-  titlePanel("Here is some stuff"),
+  titlePanel("Literacy achievement by county in Wisconsin (PROTOTYPE)"),
   
   # Generate a row with a sidebar
   sidebarLayout(
     
     # Define the sidebar with one input
     sidebarPanel(
-      selectInput("county_name", "County:", choices=d_county$county_name),
+      selectInput("County name", "County:", choices=d_county_for_website$`County name`),
       selectInput("variable_to_display", "Variable:", choices = variables_to_display),
       hr(),
       helpText("Data from Wisconsin Department of Public Instruction")

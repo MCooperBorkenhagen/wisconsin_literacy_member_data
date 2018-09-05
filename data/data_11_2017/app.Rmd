@@ -1,0 +1,72 @@
+---
+title: "DPI data provided for Wisconsin Literacy member organizations (PROTOTYPE)"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r echo = FALSE}
+# Note that this is the combined app from the server.R and ui.R scripts
+# combined for the purposes of deplying a Shiny App on RPubs. For
+# original code see server.R and ui.R scripts.
+
+
+# server ----
+require(shiny)
+load(file = "dpi_data_for_website.rda")
+# Define a server for the Shiny app
+server <- function(input, output) {
+  
+  # Fill in the spot we created for a plot
+  output$plot_variable_by_year <- renderPlot({
+    
+    # Render a barplot
+    require(dplyr)
+    require(ggplot2)
+    
+    plot_data <- d_county_for_website %>% select(variable_chosen = input$variable_to_display, `County name`, year) %>%
+      filter(`County name` == input$`County name`)
+    
+    
+    ggplot(plot_data, aes(x = year, y = variable_chosen, fill = year)) + geom_bar(stat = "identity") +
+      labs(title = paste(input$variable_to_display), y = "% students at 'below basic' level", x = "Year") +
+      theme(title = element_text(size = 14, hjust = .5), axis.title = element_text(size = 12, hjust = .5), legend.position = "none")
+    
+  })
+}
+
+# ui ----
+# set the eligible variables to display:
+variables_to_display = c("Below basic high school English and Language Arts (%)", "Average high school English score (%)", "Average high school Reading score (%)", 
+                         "English language learners in 12th grade (%)", "Graduating seniors (%)", "Below basic elementary school English & Language Arts (%)",
+                         "Below basic 3-5th grade English & Language Arts (%)", "Below basic 6-8th grade English & Language Arts (%)", "Unemployment")
+# Use a fluid Bootstrap layout
+ui <- shinyUI(fluidPage(
+  
+  # Give the page a title
+  titlePanel("Literacy achievement by county in Wisconsin"),
+  
+  # Generate a row with a sidebar
+  sidebarLayout(
+    
+    # Define the sidebar with one input
+    sidebarPanel(
+      selectInput("County name", "County:", choices=d_county_for_website$`County name`),
+      selectInput("variable_to_display", "Variable:", choices = variables_to_display),
+      hr(),
+      helpText("Data from Wisconsin Department of Public Instruction")
+    ),
+    
+    # Create a spot for the barplot
+    mainPanel(
+      plotOutput("plot_variable_by_year")  
+    ))))
+
+
+shinyApp(ui = ui, server = server)
+```

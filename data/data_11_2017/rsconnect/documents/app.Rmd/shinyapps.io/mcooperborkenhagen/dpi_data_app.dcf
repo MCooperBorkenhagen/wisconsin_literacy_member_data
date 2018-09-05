@@ -1,0 +1,12 @@
+name: dpi_data_app
+title: dpi_data_app
+username:
+account: mcooperborkenhagen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 421035
+bundleId: 1570996
+url: https://mcooperborkenhagen.shinyapps.io/dpi_data_app/
+when: 1536161999.90999
+asMultiple: FALSE
+asStatic: FALSE

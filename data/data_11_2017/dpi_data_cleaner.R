@@ -119,11 +119,25 @@ data_2015_2017_averages = rbind(data_2015_2017_averages, means_of_all_cols)
 write.csv(data_2015_2017_averages, "WL_county_data_2015_2017_averages.csv")
 
 
+# create graphing-ready dataframe with more legible variable names:
+d_county %>% rename(`County name` = county_name,
+                    `Below basic high school English and Language Arts (%)` = percent_act_ela_below_basic,
+                    `Average high school English score (%)` = average_act_english_percentile,
+                    `Average high school Reading score (%)` = average_act_reading_percentile,
+                    `English language learners in 12th grade (%)` = percent_12th_grade_ell,
+                    `Graduating seniors (%)` = percent_graduates,
+                    `Below basic elementary school English & Language Arts (%)` = percent_wsas_ela_below_basic_3_8,
+                    `Below basic 3-5th grade English & Language Arts (%)` = percent_wsas_ela_below_basic_3_5,
+                    `Below basic 6-8th grade English & Language Arts (%)` = percent_wsas_ela_below_basic_6_8,
+                    `Unemployment` = unemployment
+                    ) -> d_county_for_website
+
 
 
 
 # Save to rda ----
 save(d_county, d_dist, dict, file = "dpi_data.rda") #this is the cleaned generic version of the DPI data
+save(d_county_for_website, file = "dpi_data_for_website.rda")
 save(data_2015, data_2016, data_2015_2016_averages, file = "wl_data_final.rda")
 
 # Remove what you don't need:

@@ -1,6 +1,6 @@
 require(shiny)
 
-load(file = "dpi_data.rda")
+load(file = "dpi_data_for_website.rda")
 
 
 
@@ -14,8 +14,8 @@ function(input, output) {
     require(dplyr)
     require(ggplot2)
     
-    plot_data <- d_county %>% select(variable_chosen = input$variable_to_display, county_name, year) %>%
-      filter(county_name == input$county_name)
+    plot_data <- d_county_for_website %>% select(variable_chosen = input$variable_to_display, `County name`, year) %>%
+      filter(`County name` == input$`County name`)
     
     
     ggplot(plot_data, aes(x = year, y = variable_chosen, fill = year)) + geom_bar(stat = "identity") +
