@@ -1,0 +1,10 @@
+name: wisconsin_literacy_member_data_1
+title:
+username:
+account: wisconsinliteracy
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 796163
+bundleId: 1946813
+url: https://wisconsinliteracy.shinyapps.io/wisconsin_literacy_member_data_1/
+when: 1552889282.56421

@@ -1,0 +1,62 @@
+8.16.18 Meeting
+Attended: Liz, Michele, Matt
+
+
+Notes
+- Some copy for sharing the data prototypes with wisconsin literacy member orgs:
+
+Hi, I am Matt, a psychologist and adviser to Wisconsin Literacy. I am here to
+share with you some of work that we've been doing at the Wisconsin Literacy
+home office to help our member organizations understand how their communities
+are performing with regard to youth and adult literacy relative to other
+communities across the state.
+
+We've designed a simple tool that allows you to look at literacy data
+for your county as well as all other counties in Wisconsin. You can also
+look at statewide data too. Let me show you how it works.
+
+I will explain each variable that you can look at for your county, one variable
+at a time. And when I say variable, I just mean a type of literacy measure that
+you might be interested in knowing for your county. For example, "unemployment
+rate" would be a variable. It is important that you know what each variable means,
+too, so I will explain that as well.
+
+While I explain each variable, I will also show you how you can go about
+understanding looking up that variable for your county on the tool we've
+designed for you.
+
+percent_act_ela_below_basic
+The first variable here is called "percent_act_ela_below_basic". This is one of
+the ACT measures that we have available for you, and it comes from the ACT testing
+that Wisconin high school students complete. You might be thinking, "wait, isn't
+the ACT that placement test that students do to go to college? Wisconsin high
+school students don't ALL take that test". If you are thinking this, don't worry:
+all high school students do take a host of other tests throughout high school that
+are designed by ACT - they just aren't the college placement ones.
+The percent_act_ela_below_basic test is administered in 11th grade and tests
+students skills in English, including writing and other language arts. So this
+variable describes a measure of ability in writing and language arts more generally,
+which includes other topics like grammar, spelling, and composition. This specific
+number expresses the percent of a county that was classified as "below basic" on
+this measure of language arts. This basically
+means that this percentage of you county's test-taking high schoolers are performing in the
+bottom 25 percent of all test-takers across the country on this test. Said differently,
+lets say your county's "percent_act_ela_below_basic" is 10. This means that 10 percent
+of your county's students (or 1 out of 10 students), are at the lowest level of
+literacy measured on the test.
+
+
+## notes
+You don't need to express "below basic" mathematically; express it functionally.
+You could say "bottom quarter", and what would be better is to describe "below basic"
+in terms of "pre-literate" and other functional definitions.
+
+
+# organize the columns in a logical, developmental progression
+# relabel the columns so they are more descriptive
+
+
+# action required:
+# provide Liz a description of each variable and she will
+# talk to Sarah
+# by 9/5 write the whole script
