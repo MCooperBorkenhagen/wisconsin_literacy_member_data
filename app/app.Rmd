@@ -1,0 +1,117 @@
+---
+title:
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+require(readxl)
+```
+
+
+
+```{r echo = FALSE}
+# Note that this is the combined app from the server.R and ui.R scripts
+# combined for the purposes of deplying a Shiny App on RPubs. For
+# original code see server.R and ui.R scripts.
+
+
+# server ----
+require(shiny)
+load(file = "./data/dpi_data_for_website.rda")
+load(file = "./data/variable_descriptors.rda")
+# Define a server for the Shiny app
+
+server <- function(input, output) {
+  
+  # Fill in the spot we created for a plot
+  output$plot_variable_by_year <- renderPlot({
+    
+    # Render a barplot
+    require(dplyr)
+    require(ggplot2)
+    require(gridExtra)
+    require(grid)
+    
+    # supply variables for the visual:
+    plot_data <- d_county_for_website %>% select(variable_chosen = input$variable_to_display, `County name`, year) %>%
+      filter(`County name` == input$`County name`)
+    
+    adult_or_student = ifelse(input$variable_to_display == "Unemployment (adult)", "adults", "students")
+    
+    # get variable descriptor
+    descriptor = variable_descriptors[input$variable_to_display]
+    descriptor_grob = textGrob(str_wrap(descriptor, width = 45))
+    ?textGrob
+    # the conditional on the subtitle
+    scores_expressed_as_averages = c("Average high school English score (%)",
+                                     "Average high school Reading score (%)")
+    subtitle_text = ifelse(input$variable_to_display %in% scores_expressed_as_averages, 
+                           paste("Rank for", adult_or_student, "in", input$`County name`, "county"),
+                           paste(tools::toTitleCase(adult_or_student), "of every 100 in", input$`County name`, "county"))
+    
+    # the conditional on the y axis descriptor
+    y_axis_text = ifelse(input$variable_to_display %in% scores_expressed_as_averages, 
+                         paste("Out of every 100 students nationally"), 
+                         paste("Of every 100", adult_or_student))
+    
+    
+    
+    plot = ggplot(plot_data, aes(x = year, y = variable_chosen, fill = factor(year))) + 
+      geom_bar(stat = "identity", color = "black", size = 1.25) +
+      geom_text(aes(label= round(variable_chosen, digits = 0)), size = 7, vjust=-.5) +
+#      labs(title = paste(input$variable_to_display),  subtitle = paste(tools::toTitleCase(adult_or_student), "of every 100 in", input$`County name`, "county"), y = paste("Of every 100", adult_or_student), x = "Year") +
+      labs(title = paste(input$variable_to_display),  
+           subtitle = subtitle_text, 
+           y = y_axis_text, 
+           x = "Year") +
+      ylim(c(0, 100)) +
+      theme(plot.title = element_text(size = 15, hjust = .5),
+            plot.subtitle = element_text(size = 13, hjust = .5),
+            axis.title = element_text(size = 14, hjust = .5), 
+            axis.text.y = element_text(size = 11, hjust = .5),
+            axis.text.x = element_text(size = 14),
+            legend.position = "none")
+      grid.arrange(plot, descriptor_grob, ncol=2, nrow = 1)
+  })
+  
+
+}
+
+# ui ----
+# set the eligible variables to display:
+variables_to_display = c("Below basic high school English and Language Arts (%)", 
+                         "Average high school English score (%)", 
+                         "Average high school Reading score (%)", 
+                         "English language learners in 12th grade (%)", 
+                         "Graduating seniors (%)", 
+                         "Below basic elementary school English & Language Arts (%)",
+                         "Below basic 6-8th grade English & Language Arts (%)", 
+                         "Unemployment (adult)")
+# Use a fluid Bootstrap layout
+ui <- shinyUI(fluidPage(
+  
+  # Give the page a title
+  titlePanel("Data by county in Wisconsin"),
+  
+  # Generate a row with a sidebar
+  sidebarLayout(
+    
+    # Define the sidebar with one input
+    sidebarPanel(
+      selectInput("County name", "County:", choices=d_county_for_website$`County name`),
+      selectInput("variable_to_display", "Variable:", choices = variables_to_display),
+      hr(),
+      helpText("Data from Wisconsin Departments of Public Instruction and Workforce Development")
+    ),
+    
+    # Create a spot for the barplot
+    mainPanel(
+      plotOutput("plot_variable_by_year", width = "125%", height = "300px")
+    ))))
+
+
+shinyApp(ui = ui, server = server)
+```
