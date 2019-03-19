@@ -20,8 +20,9 @@ require(readxl)
 
 # server ----
 require(shiny)
+require(readxl)
 load(file = "./data/dpi_data_for_website.rda")
-load(file = "./data/variable_descriptors.rda")
+variable_descriptors = read_xlsx('./data/variable_descriptors.xlsx')
 # Define a server for the Shiny app
 
 server <- function(input, output) {
